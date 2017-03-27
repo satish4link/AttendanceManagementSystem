@@ -21,14 +21,8 @@
 		</div>
 		<div class="navigation">
 			<ul>
-				<li><a href="admin.php">home</a></li>
-				<li><a href="staffRegistration.php">staff reg</a></li>
-				<li><a href="studentRegistration.php">student reg</a></li>
-				<li><a href="subjectEntry.php">subject entry</a></li>
-				<li><a href="staffRecord.php">staff record</a></li>
-				<li><a href="studentRecord.php">student record</a></li>
-				<li><a href="attendanceReportRecord">attendance report record</a></li>
-				<li><a href="logout.php">logout</a></li>
+				<li><a href="staffHome.php">Home</a></li>
+				<li><a href="classAttendance.php">Class Attendance</a></li>
 			</ul>
 		</div>
 	</header>

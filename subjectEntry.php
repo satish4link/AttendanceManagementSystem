@@ -8,25 +8,25 @@ include_once 'include/adminheader.php';
             require_once 'classes/class.user.php';
             $user=new USER;
 
-    //         	if(isset($_POST["dsubmit"])){
-				// 	$department = trim($_POST["department"]);
+            	if(isset($_POST["dsubmit"])){
+					$department = trim($_POST["department"]);
 
-				// 	if($department == ""){
-				// 		echo "<p style='text-align:left; color:red; padding-left:20px; padding-bottom:10px; '>*Please enter Department name*</p>";
-				// 	}else{
-				// 		try{
-				// 			$result = $user->runQuery("INSERT INTO department(d_name) VALUES('$department')");
-				// 			$stmt = $result->execute();
-				// 			if($stmt){
-				// 				echo "<p style='text-align:left; color:green; padding-left:20px; padding-bottom:10px; '>*Data Inserted*</p>";
-				// 			}else{
-				// 				echo "<p style='text-align:left; color:red; padding-left:20px; padding-bottom:10px; '>*Something is worng, Try again.*</p>";
-				// 			}
-				// 		}catch(PDOException $ex){
-				// 			echo $ex->getMessage();
-				// 		}
-				// 	}	
-				// }
+					if($department == ""){
+						echo "<p style='text-align:left; color:red; padding-left:20px; padding-bottom:10px; '>*Please enter Department name*</p>";
+					}else{
+						try{
+							$result = $user->runQuery("INSERT INTO department(d_name) VALUES('$department')");
+							$stmt = $result->execute();
+							if($stmt){
+								echo "<p style='text-align:left; color:green; padding-left:20px; padding-bottom:10px; '>*Data Inserted*</p>";
+							}else{
+								echo "<p style='text-align:left; color:red; padding-left:20px; padding-bottom:10px; '>*Something is worng, Try again.*</p>";
+							}
+						}catch(PDOException $ex){
+							echo $ex->getMessage();
+						}
+					}	
+				}
 
 				if(isset($_POST["submit"])){
 					$department = trim($_POST["department"]);
@@ -50,7 +50,7 @@ include_once 'include/adminheader.php';
 					}	
 				}
 			?>
-			<!-- <table align="left" style="border: 1px solid #7e2199;">
+			<table align="left" style="border: 1px solid #7e2199;">
 				<form method="post" action="">
 					<tr>
 						<td style="padding: 10px; text-decoration:underline;">DEPARTMENT ENTRY</td>
@@ -69,8 +69,8 @@ include_once 'include/adminheader.php';
 						<input type="reset" name="reset" value="Cancel" /></td>
 					</tr>
 				</form>
-			</table> -->
-			<table align="center" style="border: 1px solid #7e2199;>
+			</table>
+			<table align="center" style="border: 1px solid #7e2199;">
 				<form method="post" action="">
 					<tr>
 						<td style="padding: 10px; text-decoration:underline;">SUBJECT ENTRY</td>
@@ -104,14 +104,21 @@ include_once 'include/adminheader.php';
 						<td>
 							<select name="semester">
 								<option>------------Semester----------</option>
-								<option>SEMESTER 1</option>
-								<option>SEMESTER 2</option>
-								<option>SEMESTER 3</option>
-								<option>SEMESTER 4</option>
-								<option>SEMESTER 5</option>
-								<option>SEMESTER 6</option>
-								<option>SEMESTER 7</option>
-								<option>SEMESTER 8</option>
+								<?php
+									try{
+						                $result=$user->runQuery("SELECT * FROM semester");
+						                $result->execute();
+						                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+						                	if ($d_id == $row['sem_id']) {
+												echo "<option value='" . $row['sem_id'] . "' selected>" . $row['sem_name'] . "</option>";
+											} else {
+												echo "<option value='" . $row['sem_id'] . "'>" . $row['sem_name'] . "</option>";
+											}
+						                }
+						            }catch(PDOException $ex){
+						                echo $ex->getMessage();
+						            }
+								?>
 							</select>
 						</td>
 					</tr>
@@ -128,7 +135,6 @@ include_once 'include/adminheader.php';
 			</table>
 		</div>
 		<div class="container">
-			<form method="post" action="">
 			<!-- align="center" -->
 				<table align="center">
 					<tr style="font-weight: bold;">
@@ -156,7 +162,6 @@ include_once 'include/adminheader.php';
 			            }
 		            ?>
 				</table>
-			</form>
 		</div>
 	</section>
 <?php

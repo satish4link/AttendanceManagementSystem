@@ -79,7 +79,7 @@ include_once 'include/adminheader.php';
 					</tr>
 					<tr>
 						<td>*Email:</td>
-						<td><input type="email" name="email" placeholder="Email"></td>
+						<td><input type="email" name="email" placeholder="Email" onkeyup="checkEmailValid();" /></td>
 					</tr>
 					<tr>
 						<td>*Department:</td>
@@ -121,6 +121,26 @@ include_once 'include/adminheader.php';
 					</tr>
 				</form>
 			</table>
+			<script>
+                        function checkEmailValid(){
+                            var emailValue = document.getElementById( "email" ).value; //Data collected from form field
+                            
+                             $.ajax({
+                                 type: "POST",
+                                 url: "ajax/checkingEmail.php",
+                                 data: {email:emailValue}    //Key,value pair to be sent
+                                 }).done(function( result ) {
+                                    $("#freevalid").html(result);
+                                    if(result=="OK"){
+                                        $('#freevalid').css('color', 'yellow');
+                                        $("#submit").prop('disabled', false);
+                                    }
+                                    else{
+                                        $('#freevalid').css('color', 'red');   
+                                    }
+                             });
+                        }
+                </script>
 		</div>
 		<div class="container">
 			<?php
@@ -136,7 +156,6 @@ include_once 'include/adminheader.php';
 			                }
 			            }
 			?>
-			<form method="post" action="">
 			<!-- align="center" -->
 				<table align="center">
 					<tr style="font-weight: bold;">
@@ -164,7 +183,6 @@ include_once 'include/adminheader.php';
 			            }
 		            ?>
 				</table>
-			</form>
 		</div>
 	</section>
 <?php

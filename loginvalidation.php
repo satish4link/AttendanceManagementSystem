@@ -30,7 +30,7 @@ if(isset($_POST['submit'])){
 		}
 	}else{
 		if($user->staffLogin($username, $password)){
-			$user->redirect('staffDashboard.php');
+			$user->redirect('staffHome.php');
 		}else{
 			$_SESSION['message'] = "Could not login as $username";
 	        $user->redirect("login.php");

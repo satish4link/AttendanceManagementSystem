@@ -39,7 +39,6 @@ include_once 'include/adminheader.php';
 			                }
 			            }
 			?>
-			<form method="post" action="">
 			<!-- align="center" -->
 				<table align="center">
 					<tr style="font-weight: bold;">
@@ -94,7 +93,6 @@ include_once 'include/adminheader.php';
 			            }
 		            ?>
 				</table>
-			</form>
 		</div>
 	</section>
 <?php
