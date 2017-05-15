@@ -23,6 +23,7 @@
 			<ul>
 				<li><a href="staffHome.php">Home</a></li>
 				<li><a href="classAttendance.php">Class Attendance</a></li>
+				<li><a href="logout.php">logout</a></li>
 			</ul>
 		</div>
 	</header>

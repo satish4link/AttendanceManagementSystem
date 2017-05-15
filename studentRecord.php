@@ -43,13 +43,13 @@ include_once 'include/adminheader.php';
 				<table align="center">
 					<tr style="font-weight: bold;">
 						<td>*Registration Code</td>
-						<td>*Staff Name</td>
+						<td>*Student Name</td>
 						<td>*Gender</td>
 						<td>*Date Of Birth</td>
 						<td>*Address</td>
 						<td>*Phone</td>
 						<td>*Email</td>
-						<td>*Department</td>
+						<td>*Subject</td>
 						<td>*Semester</td>
 						<td>Update/Delete</td>
 					</tr>
@@ -58,7 +58,7 @@ include_once 'include/adminheader.php';
 	    					$search = $_POST['code'];
 	    					
 	    					try{
-				                $result=$user->runQuery("SELECT department.d_name, student_tbl.student_id, student_tbl.registration_code, student_tbl.fname, student_tbl.lname, student_tbl.gender, student_tbl.dob, student_tbl.address, student_tbl.phone, student_tbl.email, student_tbl.semester FROM student_tbl, department WHERE CONCAT (student_tbl.registration_code, student_tbl.fname, student_tbl.lname, student_tbl.phone, department.d_name) LIKE '%" . $search . "%' AND student_tbl.d_id = department.d_id");
+				                $result=$user->runQuery("SELECT subject_tbl.subject_name, student_tbl.student_id, student_tbl.registration_code, student_tbl.fname, student_tbl.lname, student_tbl.gender, student_tbl.dob, student_tbl.address, student_tbl.phone, student_tbl.email, student_tbl.semester FROM student_tbl, subject_tbl WHERE CONCAT (student_tbl.registration_code, student_tbl.fname, student_tbl.lname, student_tbl.phone, department.d_name) LIKE '%" . $search . "%' AND student_tbl.subject_id = subject_tbl.subject_id");
 				                $result->execute();
 				                displayData($result);
 				            }catch(PDOException $ex){
@@ -66,7 +66,7 @@ include_once 'include/adminheader.php';
 				            }	    					
 	    				}else{
 	    					try{
-				                $result=$user->runQuery("SELECT department.d_name, student_tbl.student_id, student_tbl.registration_code, student_tbl.fname, student_tbl.lname, student_tbl.gender, student_tbl.dob, student_tbl.address, student_tbl.phone, student_tbl.email, student_tbl.semester FROM student_tbl, department WHERE student_tbl.d_id = department.d_id");
+				                $result=$user->runQuery("SELECT subject_tbl.subject_name, student_tbl.student_id, student_tbl.registration_code, student_tbl.fname, student_tbl.lname, student_tbl.gender, student_tbl.dob, student_tbl.address, student_tbl.phone, student_tbl.email, student_tbl.semester FROM student_tbl, subject_tbl WHERE student_tbl.subject_id = subject_tbl.subject_id");
 				                $result->execute();
 				                displayData($result);
 				            }catch(PDOException $ex){
@@ -85,7 +85,7 @@ include_once 'include/adminheader.php';
 			                        print "<td>".$row["address"] . "</td>";
 			                        print "<td>".$row["phone"] . "</td>";
 			                        print "<td>".$row["email"] . "</td>";
-			                        print "<td>".$row["d_name"] . "</td>";
+			                        print "<td>".$row["subject_name"] . "</td>";
 			                        print "<td>".$row["semester"] . "</td>";
 			                        print "<td><a href='updateStudentDetails.php?id=".$row['student_id']."'>Update</a> | <a onclick='return confirmDel()' href=?mode=del&id=".$row['student_id'].">Delete</a></td>";
 			                    print "</tr>";

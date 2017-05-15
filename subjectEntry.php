@@ -141,8 +141,24 @@ include_once 'include/adminheader.php';
 						<td>*Department</td>
 						<td>*Semester</td>
 						<td>*Subject</td>
+						<td></td>
 					</tr>
 					<?php
+
+						/* deleting subject */
+						if(isset($_GET["mode"])){
+			                $mode = $_GET["mode"];
+			                if($mode == "del"){
+			                    $id = $_GET["id"];
+			                    $result = $user->runQuery("DELETE FROM subject_tbl WHERE subject_id = '$id'");
+			                    $result->execute();
+			                }
+			                if($result){
+			                    echo "<p>1 row deleted.</p>";
+			                }
+			            }
+
+
 						function displayData($result)
 			            {
 			                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -150,11 +166,12 @@ include_once 'include/adminheader.php';
 			                        print "<td>".$row["d_name"] . "</td>";
 			                        print "<td>".$row["sem_name"] . "</td>";
 			                        print "<td>".$row["subject_name"] . "</td>";
+			                        print "<td><a onclick='return confirmDel()' href=?mode=del&id=".$row['subject_id'].">Delete</a></td>";
 			                    print "</tr>";
 			                }
 			            }
 			            try{
-			                $result=$user->runQuery("SELECT department.d_name, semester.sem_name, subject_tbl.subject_name FROM subject_tbl, department, semester WHERE subject_tbl.d_id = department.d_id AND subject_tbl.sem_id = semester.sem_id");
+			                $result=$user->runQuery("SELECT subject_tbl.subject_id, department.d_name, semester.sem_name, subject_tbl.subject_name FROM subject_tbl, department, semester WHERE subject_tbl.d_id = department.d_id AND subject_tbl.sem_id = semester.sem_id");
 			                $result->execute();
 			                displayData($result);
 			            }catch(PDOException $ex){

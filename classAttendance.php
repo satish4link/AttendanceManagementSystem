@@ -5,13 +5,10 @@ require_once 'include/staffHeader.php';
 		<div class="container">
 			<h1>Class Attendance</h1>
             <table align="center">
-                    <tr style="font-weight: bold;">
-                        <td>Username</td>
-                        <td>Department</td>
-                        <td>Semester</td>
-                        <td>Subject</td>
-                        <td></td>
-                    </tr>
+                <tr>
+                    <td>Subject</td>
+                    <td></td>
+                </tr>
                     <?php
                         require_once 'classes/class.user.php';
                         $user=new USER;
@@ -22,7 +19,7 @@ require_once 'include/staffHeader.php';
                             }
                               
                             try{
-                                $result=$user->runQuery("SELECT staff_tbl.staff_id, staff_tbl.username, department.d_name, semester.sem_name, subject_tbl.subject_name FROM staff_tbl, department, semester, subject_tbl WHERE staff_tbl.d_id = department.d_id AND subject_tbl.d_id = department.d_id AND subject_tbl.sem_id = semester.sem_id AND staff_tbl.username = '$user_name'");
+                                $result=$user->runQuery("SELECT staff_tbl.username, subject_tbl.subject_name FROM staff_tbl, subject_tbl WHERE subject_tbl.d_id = staff_tbl.d_id AND staff_tbl.username = '$user_name'");
                                 $result->execute();
                                 displayData($result);
                             }catch(PDOException $ex){
@@ -33,11 +30,8 @@ require_once 'include/staffHeader.php';
                         {
                             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                                 print "<tr >";
-                                    print "<td>".$row["username"] ."</td>";
-                                    print "<td>".$row["d_name"] . "</td>";
-                                    print "<td>".$row["sem_name"] . "</td>";
                                     print "<td>".$row["subject_name"] . "</td>";
-                                    print "<td><a href='attendanceForm.php?id=".$row['username']."&d_name=".$row['d_name']."&sem_name=".$row['sem_name']."&subject_name=".$row['subject_name']."'>Take Attendance</a></td>";
+                                    print "<td><a href='takeAttendance.php?subject_name=".$row['subject_name']."'>Take Attendance</a></td>";
                                 print "</tr>";
                             }
                         }

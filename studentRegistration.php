@@ -17,14 +17,14 @@ include_once 'include/adminheader.php';
 					$address = trim($_POST["address"]);
 					$phone = trim($_POST["phone"]);
                     $email = trim($_POST["email"]);
-					$department = trim($_POST["department"]);
+					$subject = trim($_POST["subject"]);
 					$semester = trim($_POST["semester"]);
 
-					if($registration_code  == "" || $student_fname == "" || $student_lname == "" || $gender == "" || $dob == "" || $address == "" || $phone == "" || $email == "" || $department == "" || $semester == ""){
+					if($registration_code  == "" || $student_fname == "" || $student_lname == "" || $gender == "" || $dob == "" || $address == "" || $phone == "" || $email == "" || $subject == "" || $semester == ""){
 						echo "<p style='text-align:center; color:red; padding-bottom:10px; '>*All fields must be filled up*</p>";
 					}else{
 						try{
-							$result = $user->runQuery("INSERT INTO student_tbl(registration_code, fname, lname, gender, dob, address, phone, email, d_id, semester) VALUES('$registration_code', '$student_fname', '$student_lname', '$gender', '$dob', '$address', '$phone', '$email', '$department', '$semester')");
+							$result = $user->runQuery("INSERT INTO student_tbl(registration_code, fname, lname, gender, dob, address, phone, email, subject_id, semester) VALUES('$registration_code', '$student_fname', '$student_lname', '$gender', '$dob', '$address', '$phone', '$email', '$subject', '$semester')");
 							$stmt = $result->execute();
 							if($stmt){
 								echo "<p style='text-align:center; color:green; padding-bottom:10px; '>*Data Inserted*</p>";
@@ -57,8 +57,8 @@ include_once 'include/adminheader.php';
 					<tr>
 						<td>*Gender</td>
 						<td>
-							<input type="radio" name="gender" value="male" checked> Male<br>
-							<input type="radio" name="gender" value="female"> Female<br>
+							<input type="radio" name="gender" value="Male" checked> Male<br>
+							<input type="radio" name="gender" value="Female"> Female<br>
 						</td>
 					</tr>
 					<tr>
@@ -78,19 +78,19 @@ include_once 'include/adminheader.php';
 						<td><input type="email" name="email" placeholder="Email"></td>
 					</tr>
 					<tr>
-						<td>*Department:</td>
+						<td>*Subject:</td>
 						<td>
-							<select name="department" id="d_id">
+							<select name="subject" id="subject_id">
 								<option value="">-----------Select----------</option>
 								<?php
 									try{
-						                $result=$user->runQuery("SELECT * FROM department");
+						                $result=$user->runQuery("SELECT * FROM subject_tbl");
 						                $result->execute();
 						                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-						                	if ($d_id == $row['d_id']) {
-												echo "<option value='" . $row['d_id'] . "' selected>" . $row['d_name'] . "</option>";
+						                	if ($d_id == $row['subject_id']) {
+												echo "<option value='" . $row['subject_id'] . "' selected>" . $row['subject_name'] . "</option>";
 											} else {
-												echo "<option value='" . $row['d_id'] . "'>" . $row['d_name'] . "</option>";
+												echo "<option value='" . $row['subject_id'] . "'>" . $row['subject_name'] . "</option>";
 											}
 						                }
 						            }catch(PDOException $ex){
@@ -143,7 +143,7 @@ include_once 'include/adminheader.php';
 					<tr style="font-weight: bold;">
 						<td>*Registration Code</td>
 						<td>*Student Name</td>
-						<td>*Department</td>
+						<td>*Subject</td>
 						<td>*Semester</td>
 					</tr>
 					<?php
@@ -153,13 +153,13 @@ include_once 'include/adminheader.php';
 			                    print "<tr >";
 			                        print "<td>".$row["registration_code"] . "</td>";
 			                        print "<td>".$row["fname"] ." ".$row["lname"]. "</td>";
-			                        print "<td>".$row["d_name"] . "</td>";
+			                        print "<td>".$row["subject_name"] . "</td>";
 			                        print "<td>".$row["semester"] . "</td>";
 			                    print "</tr>";
 			                }
 			            }
 			            try{
-			                $result=$user->runQuery("SELECT student_tbl.registration_code, student_tbl.fname, student_tbl.lname, student_tbl.semester, department.d_name FROM student_tbl, department WHERE student_tbl.d_id = department.d_id");
+			                $result=$user->runQuery("SELECT student_tbl.registration_code, student_tbl.fname, student_tbl.lname, student_tbl.semester, subject_tbl.subject_name FROM student_tbl, subject_tbl WHERE student_tbl.subject_id = subject_tbl.subject_id");
 			                $result->execute();
 			                displayData($result);
 			            }catch(PDOException $ex){
