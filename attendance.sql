@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 16, 2017 at 06:10 PM
+-- Generation Time: May 15, 2017 at 12:28 PM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 7.0.13
 
@@ -19,6 +19,36 @@ SET time_zone = "+00:00";
 --
 -- Database: `attendance`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendance_tbl`
+--
+
+CREATE TABLE `attendance_tbl` (
+  `a_id` int(11) NOT NULL,
+  `subject` varchar(64) NOT NULL,
+  `student` varchar(64) NOT NULL,
+  `a_date` date DEFAULT NULL,
+  `status` varchar(64) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `attendance_tbl`
+--
+
+INSERT INTO `attendance_tbl` (`a_id`, `subject`, `student`, `a_date`, `status`) VALUES
+(1, '', '', '2017-04-21', ''),
+(5, 'Internet Development', 'Atish Chaudhary', '2017-04-22', 'PRESENT'),
+(6, 'Internet Development', 'Khusi Nandan', '2017-04-22', 'PRESENT'),
+(7, 'Internet Development', 'Dipisha sen', '2017-04-22', 'PRESENT'),
+(20, 'Internet Development', 'Atish Chaudhary', '2017-04-28', 'ABSENT'),
+(21, 'Internet Development', 'Khusi Nandan', '2017-04-28', 'ABSENT'),
+(22, 'Internet Development', 'Dipisha sen', '2017-04-28', 'ABSENT'),
+(23, 'Internet Development', 'Atish Chaudhary', '2017-05-15', 'PRESENT'),
+(24, 'Internet Development', 'Khusi Nandan', '2017-05-15', 'ABSENT'),
+(25, 'Internet Development', 'Dipisha sen', '2017-05-15', 'LATE');
 
 -- --------------------------------------------------------
 
@@ -39,7 +69,9 @@ INSERT INTO `department` (`d_id`, `d_name`) VALUES
 (1, 'BSC Computing'),
 (2, 'Networking'),
 (3, 'BBA'),
-(4, 'MIT');
+(4, 'MIT'),
+(5, 'CA'),
+(6, 'BSC (Hons) Computing');
 
 -- --------------------------------------------------------
 
@@ -82,7 +114,7 @@ CREATE TABLE `staff_tbl` (
   `dateOfBirth` date NOT NULL,
   `address` text NOT NULL,
   `degree` varchar(255) NOT NULL,
-  `phone` varchar(255) NOT NULL,
+  `phone` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `usertype` varchar(255) NOT NULL,
   `approve` tinyint(1) NOT NULL
@@ -93,8 +125,8 @@ CREATE TABLE `staff_tbl` (
 --
 
 INSERT INTO `staff_tbl` (`staff_id`, `d_id`, `username`, `staff_fname`, `staff_lname`, `password`, `dateOfBirth`, `address`, `degree`, `phone`, `email`, `usertype`, `approve`) VALUES
-(1, 1, 'Staff001', 'Satish', 'Chaudhary', '8b1a9953c4611296a827abf8c47804d7', '1996-04-19', 'Kumari Club, Balkhu', 'BIT', '9860776653', 'satish4link@gmail.com', 'Faculty', 1),
-(7, 1, 'Schand', 'Saroj', 'Chand', '5d41402abc4b2a76b9719d911017c592', '2001-03-12', 'Kathmandu', 'MBA', '78965412222', 'schand@gmail.com', 'Faculty', 1);
+(1, 6, 'Staff001', 'Satish', 'Chaudhary', '8b1a9953c4611296a827abf8c47804d7', '1996-04-19', 'Kumari Club, Balkhu', 'BIT', 2147483647, 'satish4link@gmail.com', 'Faculty', 1),
+(7, 4, 'Schand', 'Saroj', 'Chand', '5d41402abc4b2a76b9719d911017c592', '2001-03-12', 'Kathmandu', 'MBA', 2147483647, 'schand@gmail.com', 'Faculty', 1);
 
 -- --------------------------------------------------------
 
@@ -104,7 +136,7 @@ INSERT INTO `staff_tbl` (`staff_id`, `d_id`, `username`, `staff_fname`, `staff_l
 
 CREATE TABLE `student_tbl` (
   `student_id` int(11) NOT NULL,
-  `d_id` int(11) NOT NULL,
+  `subject_id` int(11) NOT NULL,
   `registration_code` varchar(255) NOT NULL,
   `fname` varchar(255) NOT NULL,
   `lname` varchar(255) NOT NULL,
@@ -120,12 +152,12 @@ CREATE TABLE `student_tbl` (
 -- Dumping data for table `student_tbl`
 --
 
-INSERT INTO `student_tbl` (`student_id`, `d_id`, `registration_code`, `fname`, `lname`, `gender`, `dob`, `address`, `phone`, `email`, `semester`) VALUES
-(2, 1, 'Student001', 'Atish', 'Chaudhary', 'Male', '2000-03-07', 'Balkhu, Kumari Club', 2147483647, 'gamer4link@gmail.com', 'SEMESTER 1'),
-(3, 1, 'Student002', 'Durga', 'Chaudhary', 'female', '1997-03-07', 'Kumari Club, Balkhu', 2147483647, 'somya.cut@gmail.com', 'SEMESTER 2'),
-(4, 1, 'Student003', 'Khusi', 'Nandan', 'male', '1984-03-12', 'balkhu', 2147483647, 'khusi@gmail.com', 'SEMESTER 3'),
-(5, 1, 'Student004', 'Karishma', 'Chaudhary', 'Female', '1986-03-12', 'Balkhu, Kathmandu', 2147483647, 'karishma@gmail.com', 'SEMESTER 4'),
-(6, 1, 'dipisha001', 'dipisha', 'secn', 'Female', '2000-10-22', 'kathmandu', 74123685, 'dipisha@gmail.com', 'SEMESTER 8');
+INSERT INTO `student_tbl` (`student_id`, `subject_id`, `registration_code`, `fname`, `lname`, `gender`, `dob`, `address`, `phone`, `email`, `semester`) VALUES
+(2, 3, 'Student001', 'Atish', 'Chaudhary', 'Male', '2000-03-07', 'Balkhu, Kumari Club', 2147483647, 'gamer4link@gmail.com', 'SEMESTER 4'),
+(3, 8, 'Student002', 'Durga', 'Chaudhary', 'female', '1997-03-07', 'Kumari Club, Balkhu', 2147483647, 'somya.cut@gmail.com', 'SEMESTER 2'),
+(4, 3, 'Student003', 'Khusi', 'Nandan', 'Male', '1984-03-12', 'balkhu', 2147483647, 'khusi@gmail.com', 'SEMESTER 6'),
+(5, 9, 'Student004', 'Karishma', 'Chaudhary', 'Female', '1986-03-12', 'Balkhu, Kathmandu', 2147483647, 'karishma@gmail.com', 'SEMESTER 4'),
+(6, 3, 'dipisha001', 'Dipisha', 'sen', 'Female', '2000-10-22', 'kathmandu', 74123685, 'dipisha@gmail.com', 'SEMESTER 8');
 
 -- --------------------------------------------------------
 
@@ -145,9 +177,9 @@ CREATE TABLE `subject_tbl` (
 --
 
 INSERT INTO `subject_tbl` (`subject_id`, `d_id`, `sem_id`, `subject_name`) VALUES
-(1, 1, 8, 'Internet Development'),
-(2, 1, 8, 'Digital Security'),
-(3, 1, 8, 'Production Project');
+(3, 6, 8, 'Internet Development'),
+(8, 6, 3, 'Computer system'),
+(9, 4, 8, 'Digital Security');
 
 -- --------------------------------------------------------
 
@@ -174,6 +206,12 @@ INSERT INTO `users_tbl` (`id`, `username`, `password`, `email`, `usertype`, `app
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `attendance_tbl`
+--
+ALTER TABLE `attendance_tbl`
+  ADD PRIMARY KEY (`a_id`);
 
 --
 -- Indexes for table `department`
@@ -216,10 +254,15 @@ ALTER TABLE `users_tbl`
 --
 
 --
+-- AUTO_INCREMENT for table `attendance_tbl`
+--
+ALTER TABLE `attendance_tbl`
+  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+--
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `d_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `d_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `semester`
 --
@@ -239,7 +282,7 @@ ALTER TABLE `student_tbl`
 -- AUTO_INCREMENT for table `subject_tbl`
 --
 ALTER TABLE `subject_tbl`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `users_tbl`
 --
