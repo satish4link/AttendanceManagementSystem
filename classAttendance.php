@@ -1,4 +1,6 @@
 <?php
+session_start();
+include("session.php");
 require_once 'include/staffHeader.php';
 ?>
 	<section class="body">
@@ -13,7 +15,7 @@ require_once 'include/staffHeader.php';
                         require_once 'classes/class.user.php';
                         $user=new USER;
 
-                        if (isset($_SESSION['userSessionName'])) {
+                        if (isset($_SESSION['userSessionName'])){
                                 $user_name = $_SESSION['userSessionName'];
                                 $user_id = $_SESSION["userSession"];
                             }

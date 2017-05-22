@@ -1,4 +1,6 @@
 <?php
+session_start();
+include("session.php");
 require_once 'include/staffHeader.php';
 $subject = $_GET["subject_name"];
 ?>
@@ -18,43 +20,46 @@ $subject = $_GET["subject_name"];
                     }else{
                     $attend = $_POST['attend'];
                     //print_r($attend);
-                    try{
-                        $result=$user->runQuery("SELECT DISTINCT a_date FROM attendance_tbl");
-                        $result->execute();
-                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                            $db_date = $row['a_date'];
-                        }
-                            if($db_date == $c_date){
-                                echo "<p style='text-align:center; color:red; padding-bottom:10px; '>*Attendance already taken today*</p>";
-                            }else{
-                                foreach ($attend as $atn_key => $atn_value) {
-                                    
-                                        try{
-                                            if ($atn_value == "PRESENT") {
-                                                $result=$user->runQuery("INSERT INTO attendance_tbl(subject, student, a_date, status) VALUES('$subject', '$atn_key', '$c_date', 'PRESENT')");
-                                            }else if ($atn_value == "ABSENT") {
-                                                $result=$user->runQuery("INSERT INTO attendance_tbl(subject, student, a_date, status) VALUES('$subject', '$atn_key', '$c_date', 'ABSENT')");
-                                            }else if ($atn_value == "LATE") {
-                                                $result=$user->runQuery("INSERT INTO attendance_tbl(subject, student, a_date, status) VALUES('$subject', '$atn_key', '$c_date', 'LATE')");
-                                            }else if ($atn_value == "ONLEAVE") {
-                                                $result=$user->runQuery("INSERT INTO attendance_tbl(subject, student, a_date, status) VALUES('$subject', '$atn_key', '$c_date', 'ONLEAVE')");
-                                            }
-                                            $stmt = $result->execute();
+                            try{
+                                $result=$user->runQuery("SELECT DISTINCT a_date, subject FROM attendance_tbl");
+                                $result->execute();
+                                    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                                        $db_date = $row['a_date'];
+                                        $db_subject = $row['subject'];
+                                        // or use array
+                                    }
+                                    if($db_subject == $subject && $db_date == $c_date){
+                                    // if(in_array($subject, $db_subject) && in_array($c_date, $db_date)){
+                                        echo "<p style='text-align:center; color:red; padding-bottom:10px; '>*Attendance already taken for this subject*</p>";
+                                    }else{
+                                        foreach ($attend as $atn_key => $atn_value) {
                                             
-                                        }catch(PDOException $ex){
-                                            echo $ex->getMessage();
+                                                try{
+                                                    if ($atn_value == "PRESENT") {
+                                                        $result=$user->runQuery("INSERT INTO attendance_tbl(subject, student, a_date, status) VALUES('$subject', '$atn_key', '$c_date', 'PRESENT')");
+                                                    }else if ($atn_value == "ABSENT") {
+                                                        $result=$user->runQuery("INSERT INTO attendance_tbl(subject, student, a_date, status) VALUES('$subject', '$atn_key', '$c_date', 'ABSENT')");
+                                                    }else if ($atn_value == "LATE") {
+                                                        $result=$user->runQuery("INSERT INTO attendance_tbl(subject, student, a_date, status) VALUES('$subject', '$atn_key', '$c_date', 'LATE')");
+                                                    }else if ($atn_value == "ONLEAVE") {
+                                                        $result=$user->runQuery("INSERT INTO attendance_tbl(subject, student, a_date, status) VALUES('$subject', '$atn_key', '$c_date', 'ONLEAVE')");
+                                                    }
+                                                    $stmt = $result->execute();
+                                                    
+                                                }catch(PDOException $ex){
+                                                    echo $ex->getMessage();
+                                                }
                                         }
-                                }
-                                if($stmt){
-                                    echo "<p style='text-align:center; color:green; padding-bottom:10px; '>*Attendance Recorded*</p>";
-                                }else{
-                                    echo "<p style='text-align:center; color:red; padding-bottom:10px; '>*Something is worng, Try again.*</p>";
-                                }
-                            }
-                        
-                    }catch(PDOException $ex){
-                        echo $ex->getMessage();
-                    }
+                                        if($stmt){
+                                            echo "<p style='text-align:center; color:green; padding-bottom:10px; '>*Attendance Recorded*</p>";
+                                        }else{
+                                            echo "<p style='text-align:center; color:red; padding-bottom:10px; '>*Something is worng, Try again.*</p>";
+                                        }
+                                    }
+                                
+                                }catch(PDOException $ex){
+                                    echo $ex->getMessage();
+                                } 
                     }
                 }
             ?>

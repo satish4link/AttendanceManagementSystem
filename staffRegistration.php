@@ -1,4 +1,6 @@
 <?php
+session_start();
+include("session.php");
 include_once 'include/adminheader.php';
 ?>
 	<section class="body">
@@ -45,9 +47,10 @@ include_once 'include/adminheader.php';
 					<tr>
 						<td>*Staff Username:</td>
 						<td>
-							<input type="text" name="code" placeholder="Jsmith">
+							<input type="text" name="code" id="s_username" placeholder="Jsmith" onkeyup="checkUsernameValid();" />
 							<p>Ex: Jsmith(John Smith)</p>
 						</td>
+						<td><div id="u_valid"></div></td>
 					</tr>
 					<tr>
 						<td>*Staff First Name:</td>
@@ -79,7 +82,8 @@ include_once 'include/adminheader.php';
 					</tr>
 					<tr>
 						<td>*Email:</td>
-						<td><input type="email" name="email" placeholder="Email" onkeyup="checkEmailValid();" /></td>
+						<td><input type="email" name="email" id="email_address" placeholder="Email" onkeyup="checkEmailValid();" /></td>
+						<td><div id="freevalid"></div></td>
 					</tr>
 					<tr>
 						<td>*Department:</td>
@@ -123,20 +127,39 @@ include_once 'include/adminheader.php';
 			</table>
 			<script>
                         function checkEmailValid(){
-                            var emailValue = document.getElementById( "email" ).value; //Data collected from form field
+                            var emailValue = document.getElementById( "email_address" ).value; //Data collected from form field
                             
                              $.ajax({
                                  type: "POST",
-                                 url: "ajax/checkingEmail.php",
+                                 url: "ajax/checkingWithAjax.php",
                                  data: {email:emailValue}    //Key,value pair to be sent
                                  }).done(function( result ) {
                                     $("#freevalid").html(result);
-                                    if(result=="OK"){
-                                        $('#freevalid').css('color', 'yellow');
+                                    if(result=="Valid"){
+                                        $('#freevalid').css('color', 'green');
                                         $("#submit").prop('disabled', false);
                                     }
                                     else{
                                         $('#freevalid').css('color', 'red');   
+                                    }
+                             });
+                        }
+
+                        function checkUsernameValid(){
+                        	var usernameValue = document.getElementById( "s_username" ).value; //Data collected from form field
+                            
+                             $.ajax({
+                                 type: "POST",
+                                 url: "ajax/checkingWithAjax.php",
+                                 data: {code:usernameValue}    //Key,value pair to be sent
+                                 }).done(function( result ) {
+                                    $("#u_valid").html(result);
+                                    if(result=="Valid"){
+                                        $('#u_valid').css('color', 'green');
+                                        $("#submit").prop('disabled', false);
+                                    }
+                                    else{
+                                        $('#u_valid').css('color', 'red');   
                                     }
                              });
                         }

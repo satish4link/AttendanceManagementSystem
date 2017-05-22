@@ -22,10 +22,10 @@ include_once 'include/header.php';
 				<br/>
 				<p>You can also contact us on,</p>
 				<ul>
-					<li><a href="#"><img src="images/facebook.png" alt="facebook" /></a></li>
-					<li><a href="#"><img src="images/linkedin.png" alt="linkedin" /></a></li>
-					<li><a href="#"><img src="images/twitter.png" alt="twitter" /></a></li>
-					<li><a href="#"><img src="images/googleplus.png" alt="google plus" /></a></li>
+					<li><a target="_blank" href="https://www.facebook.com/imperfect0"><img src="images/facebook.png" alt="facebook" /></a></li>
+					<li><a target="_blank" href="https://www.linkedin.com/in/satish-chaudhary-63a261117/"><img src="images/linkedin.png" alt="linkedin" /></a></li>
+					<li><a target="_blank" href="https://twitter.com/satish4link"><img src="images/twitter.png" alt="twitter" /></a></li>
+					<li><a target="_blank" href="https://plus.google.com/u/0/112563613518147208817"><img src="images/googleplus.png" alt="google plus" /></a></li>
 				</ul>
 				<p>You can find us on this following map,</p>
 				<br/>

@@ -1,4 +1,6 @@
 <?php
+session_start();
+include("session.php");
 $id = $_GET["id"];
 
 echo $id;

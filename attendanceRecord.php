@@ -1,4 +1,6 @@
 <?php
+session_start();
+include("session.php");
 include_once 'include/adminheader.php';
 ?>
 	<section class="body">
@@ -31,6 +33,11 @@ include_once 'include/adminheader.php';
 			            }
 		            ?>
 				</table>
+
+			<div class="button">
+				<a href="generateAttendanceCount.php">Generate Attendance Count</a>
+			</div>
+
 		</div>
 	</section>
 <?php

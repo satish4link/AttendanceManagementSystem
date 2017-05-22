@@ -1,5 +1,6 @@
 <?php
 session_start();
+include("session.php");
 include_once 'include/staffHeader.php';
 ?>
 	<section class="body">

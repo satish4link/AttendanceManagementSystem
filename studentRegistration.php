@@ -1,4 +1,6 @@
 <?php
+session_start();
+include("session.php");
 include_once 'include/adminheader.php';
 ?>
 	<section class="body">
@@ -42,9 +44,10 @@ include_once 'include/adminheader.php';
 					<tr>
 						<td>*Registration Code:</td>
 						<td>
-							<input type="text" name="code" placeholder="Student001">
+							<input type="text" name="code" id="r_code" placeholder="Student001" onkeyup="checkRegistrationCode();">
 							<p>Ex: Student001</p>
 						</td>
+						<td><div id="r_valid"></div></td>
 					</tr>
 					<tr>
 						<td>*Student First Name:</td>
@@ -75,7 +78,8 @@ include_once 'include/adminheader.php';
 					</tr>
 					<tr>
 						<td>*Email:</td>
-						<td><input type="email" name="email" placeholder="Email"></td>
+						<td><input type="email" name="email" id="student_email" placeholder="Email" onkeyup="checkStudentEmail();" /></td>
+						<td><div id="email_valid"></div></td>
 					</tr>
 					<tr>
 						<td>*Subject:</td>
@@ -123,6 +127,45 @@ include_once 'include/adminheader.php';
 					</tr>
 				</form>
 			</table>
+			<script>
+                        function checkRegistrationCode(){
+                            var registrationCode = document.getElementById( "r_code" ).value; //Data collected from form field
+                            
+                             $.ajax({
+                                 type: "POST",
+                                 url: "ajax/checkingStudentDetails.php",
+                                 data: {code:registrationCode}    //Key,value pair to be sent
+                                 }).done(function( result ) {
+                                    $("#r_valid").html(result);
+                                    if(result=="Valid"){
+                                        $('#r_valid').css('color', 'green');
+                                        $("#submit").prop('disabled', false);
+                                    }
+                                    else{
+                                        $('#r_valid').css('color', 'red');   
+                                    }
+                             });
+                        }
+
+                        function checkStudentEmail(){
+                        	var emailValue = document.getElementById( "student_email" ).value; //Data collected from form field
+                            
+                             $.ajax({
+                                 type: "POST",
+                                 url: "ajax/checkingStudentDetails.php",
+                                 data: {email:emailValue}    //Key,value pair to be sent
+                                 }).done(function( result ) {
+                                    $("#email_valid").html(result);
+                                    if(result=="Valid"){
+                                        $('#email_valid').css('color', 'green');
+                                        $("#submit").prop('disabled', false);
+                                    }
+                                    else{
+                                        $('#email_valid').css('color', 'red');   
+                                    }
+                             });
+                        }
+                </script>
 		</div>
 		<div class="container">
 			<?php

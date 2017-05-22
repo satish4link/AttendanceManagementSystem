@@ -6,6 +6,7 @@ include_once 'include/header.php';
 		<div class="container">
 			<h1>login</h1>
 			<?php
+				
 				if (isset($_SESSION['message'])) {
 				    echo "<p class='error'>" . $_SESSION['message'] . "</p>";
 				}

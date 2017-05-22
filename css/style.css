@@ -154,6 +154,21 @@ body{
 .right-content ul{
 	padding: 5px 20px;
 }
+.button{
+	text-align: center;
+	padding-top:50px;
+}
+.button a:link, .button a:visited{
+	padding: 5px 10px;
+	background:#7e2199;
+	text-decoration:none;
+	color:#ffffff;
+	border-radius: 5px;
+}
+.button a:hover{
+	background: #afadad;
+	color:#7e2199;
+}
 
 
 
